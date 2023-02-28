@@ -1,8 +1,10 @@
 # ManyFormats
 
-I maintain a project which has documentation in markdown formatting as well as bbcode formatting. I got fed up with updating two otherwise equal files all the time, so I figured out a way to keep the text in one place.
+I maintain a project which has documentation in Markdown formatting as well as BBCode formatting. I got fed up with updating two otherwise equal files all the time, so I figured out a way to keep the text in one place.
 
-To achieve this I created this project, ManyFormats, and use T4 templates to keep all the text centralised.
+To achieve this I created this project, ManyFormats, and use [T4 Text Templates](https://learn.microsoft.com/en-us/visualstudio/modeling/code-generation-and-t4-text-templates) to keep all the text centralised.
+
+### Let me quickly show you how it works
 
 Given the following example file `document-template.txt`:
 
