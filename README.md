@@ -8,10 +8,11 @@ To achieve this I created this project, ManyFormats, and use [T4 Text Templates]
 
 Given the following example file `document-template.txt`:
 
-> <#= Fmt.Heading("This is a header") #>
->
-> <#= Fmt.Link("Open an issue!", "https://github.com/SpikeHimself/ManyFormats/issues") #>
+```
+<#= Fmt.Heading("This is a header") #>
 
+<#= Fmt.Link("Open an issue!", "https://github.com/SpikeHimself/ManyFormats/issues") #>
+```
 
 I can maintain my documentation like so, for Markdown:
 
