@@ -5,121 +5,106 @@ namespace ManyFormats
 
     public abstract class Format
     {
-        protected Preferences Preferences { get; }
+        public virtual string Name { get; set; }
+        public FormatPreferences Preferences { get; set;  }
 
-        public Format()
+        protected Format(string name, FormatPreferences prefs)
         {
-            Preferences = Preferences.DefaultPreferences;
+            Name = name;
+            Preferences = prefs;
         }
 
-        protected string NewLine()
+        protected Format(string name) : this(name, FormatPreferences.DefaultPreferences)
         {
-            switch (Preferences.LineEnding)
-            {
-                default:
-                case Preferences.LineEndingOptions.Automatic:
-                    return Environment.NewLine;
-                case Preferences.LineEndingOptions.Mac:
-                    return "\r";
-                case Preferences.LineEndingOptions.Unix:
-                    return "\n";
-                case Preferences.LineEndingOptions.Windows:
-                    return "\r\n";
-            }
         }
 
-        protected string NotImplemented(string input, string notImplementedMessage)
+        protected string NotImplemented(string input, string func)
         {
             switch (Preferences.NotImplementedHandling)
             {
                 default:
-                case Preferences.NotImplementedHandlingOptions.ThrowException:
-                    throw new NotImplementedException(notImplementedMessage);
-                case Preferences.NotImplementedHandlingOptions.ReturnInput:
+                case FormatPreferences.NotImplementedHandlingOptions.ThrowException:
+                    throw new NotImplementedException($"This implementation of {Name} does not support {func}");
+                case FormatPreferences.NotImplementedHandlingOptions.ReturnInput:
                     return input;
-                case Preferences.NotImplementedHandlingOptions.Skip:
+                case FormatPreferences.NotImplementedHandlingOptions.Skip:
                     return string.Empty;
             }
         }
 
-        private string CreateNotImplementedMessage(string name)
+        public virtual string Heading(string text, HeadingSize size = HeadingSize.Largest)
         {
-            return "This implementation does not support " + name;
+            return NotImplemented(text, nameof(Heading));
         }
 
-        public virtual string Heading(string text, FontSize size = FontSize.Largest)
+        public virtual string Size(string text, FontSize size = FontSize.Two)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Heading"));
-        }
-
-        public string Size(string text, FontSize size = FontSize.Largest)
-        {
-            return Heading(text, size);
+            return NotImplemented(text, nameof(Size));
         }
 
         public virtual string Bold(string text)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Bold"));
+            return NotImplemented(text, nameof(Bold));
         }
 
         public virtual string Italic(string text, ItalicMode mode = ItalicMode.Default)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Italic"));
+            return NotImplemented(text, nameof(Italic));
         }
 
         public virtual string Underline(string text)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Underline"));
+            return NotImplemented(text, nameof(Underline));
         }
 
         public virtual string Strikethrough(string text)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Strikethrough"));
+            return NotImplemented(text, nameof(Strikethrough));
         }
 
         public virtual string Colour(string text, string colour)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Colour"));
+            return NotImplemented(text, nameof(Colour));
         }
 
         public virtual string Subscript(string text)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Subscript"));
+            return NotImplemented(text, nameof(Subscript));
         }
 
         public virtual string Superscript(string text)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Superscript"));
+            return NotImplemented(text, nameof(Superscript));
         }
 
         public virtual string Quote(string text)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Quote"));
+            return NotImplemented(text, nameof(Quote));
         }
 
         public virtual string Code(string text, CodeMode mode = CodeMode.Inline)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Code"));
+            return NotImplemented(text, nameof(Code));
         }
 
         public virtual string Link(string text, string link)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Link"));
+            return NotImplemented(text, nameof(Link));
         }
 
         public virtual string Image(string link, int height = -1, int width = -1, string align = "")
         {
-            return NotImplemented(link, CreateNotImplementedMessage("Image"));
+            return NotImplemented(link, nameof(Image));
         }
 
-        public virtual string List(ListBullets bullet, int indent = 0, params string[] items)
+        public virtual string List(ListBullets bullet, int indent = 0, bool spacedItems = false, params string[] items)
         {
-            return NotImplemented(string.Join(", ", items), CreateNotImplementedMessage("List"));
+            return NotImplemented(string.Join(", ", items), nameof(List));
         }
 
         public virtual string Task(string text, bool complete = false)
         {
-            return NotImplemented(text, CreateNotImplementedMessage("Task"));
+            return NotImplemented(text, nameof(Task));
         }
     }
 }

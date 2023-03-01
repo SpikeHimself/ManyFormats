@@ -53,11 +53,12 @@
     <Compile Include="Formats\Bbcode.cs" />
     <Compile Include="Format.cs" />
     <Compile Include="Formats\Markdown.cs" />
-    <Compile Include="Preferences.cs" />
+    <Compile Include="FormatPreferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ManyFormats.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

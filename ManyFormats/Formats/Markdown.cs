@@ -6,19 +6,19 @@ namespace ManyFormats.Formats
     public class Markdown : Format
     {
 
-        private Dictionary<FontSize, string> fontSizePrefixes;
+        private Dictionary<HeadingSize, string> headingSizePrefixes;
         private Dictionary<ListBullets, string> listBulletsPrefixes;
 
-        public Markdown()
+        public Markdown() : this("Markdown") { }
+        public Markdown(string name) : base(name)
         {
-            fontSizePrefixes = new Dictionary<FontSize, string>()
+            headingSizePrefixes = new Dictionary<HeadingSize, string>()
             {
-                [FontSize.Largest] = "# ",
-                [FontSize.Larger] = "## ",
-                [FontSize.Large] = "## ",
-                [FontSize.Medium] = "### ",
-                [FontSize.Small] = "#### ",
-                [FontSize.Smallest] = "##### ",
+                [HeadingSize.Largest]  = "# ",
+                [HeadingSize.Large]    = "## ",
+                [HeadingSize.Medium]   = "### ",
+                [HeadingSize.Small]    = "#### ",
+                [HeadingSize.Smallest] = "##### ",
             };
 
             listBulletsPrefixes = new Dictionary<ListBullets, string>()
@@ -47,14 +47,9 @@ namespace ManyFormats.Formats
             }
         }
 
-        public override string Colour(string text, string colour)
+        public override string Heading(string text, HeadingSize size = HeadingSize.Largest)
         {
-            throw new NotImplementedException("This implementation of Markdown does not support colours");
-        }
-
-        public override string Heading(string text, FontSize size = FontSize.Largest)
-        {
-            return fontSizePrefixes[size] + text;
+            return headingSizePrefixes[size] + text;
         }
 
         public override string Image(string link, int height = -1, int width = -1, string align = "")
@@ -84,24 +79,25 @@ namespace ManyFormats.Formats
             return $"[{text}]({link})";
         }
 
-        public override string List(ListBullets bullet, int indent = 0, params string[] items)
+        public override string List(ListBullets bullet, int indent = 0, bool spacedItems = false, params string[] items)
         {
             var list = string.Empty;
             var tabs = new string('\t', indent);
-            for (int i = 1; i < items.Length; i++)
+            for (int i = 0; i < items.Length; i++)
             {
+                if (spacedItems && i > 0) list += Preferences.NewLine;
                 var itemText = items[i];
                 list += tabs;
                 if (bullet == ListBullets.Number)
                 {
-                    list += $"{i}. ";
+                    list += $"{i+1}. ";
                 }
                 else
                 {
                     list += listBulletsPrefixes[bullet];
                 }
                 list += itemText;
-                list += Environment.NewLine;
+                list += Preferences.NewLine;
             }
             return list;
         }
@@ -131,9 +127,5 @@ namespace ManyFormats.Formats
             return $"[{(complete ? "x" : " ")}] {text}";
         }
 
-        public override string Underline(string text)
-        {
-            throw new NotImplementedException("This implementation of Markdown does not support underlining");
-        }
     }
 }

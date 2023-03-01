@@ -5,19 +5,35 @@ namespace ManyFormats.Formats
 {
     public class Bbcode : Format
     {
-        private Dictionary<FontSize, int> headingSizeValues;
+        private Dictionary<HeadingSize, FontSize> headingToFontMap;
 
-        public Bbcode()
+        public Bbcode() : this("BBCode") { }
+        public Bbcode(string name) : base(name) 
         {
-            headingSizeValues = new Dictionary<FontSize, int>()
+            headingToFontMap = new Dictionary<HeadingSize, FontSize>()
             {
-                [FontSize.Largest] = 6,
-                [FontSize.Larger] = 5,
-                [FontSize.Large] = 4,
-                [FontSize.Medium] = 3,
-                [FontSize.Small] = 2,
-                [FontSize.Smallest] = 1,
+                [HeadingSize.Largest] = FontSize.Six,
+                [HeadingSize.Large] = FontSize.Five,
+                [HeadingSize.Medium] = FontSize.Four,
+                [HeadingSize.Small] = FontSize.Three,
+                [HeadingSize.Smallest] = FontSize.Two,
             };
+        }
+
+        public override string Size(string text, FontSize size = FontSize.Two)
+        {
+            return $"[size={(int)size}]{text}[/size]";
+        }
+
+        /// <summary>
+        /// BBCode does not have a headings format, so we use Size() and Bold() to achieve a similar effect.
+        /// </summary>
+        /// <param name="text">The text to format</param>
+        /// <param name="size">The HeadingSize to use to determine the size of the text</param>
+        /// <returns>Bolded text of a FontSize similar to the given HeadingSize</returns>
+        public override string Heading(string text, HeadingSize size = HeadingSize.Largest)
+        {
+            return Size(Bold(text), headingToFontMap[size]);
         }
 
         public override string Bold(string text)
@@ -32,13 +48,7 @@ namespace ManyFormats.Formats
 
         public override string Colour(string text, string colour)
         {
-            return $"[color]{colour}]{text}[/color]";
-        }
-
-        public override string Heading(string text, FontSize size = FontSize.Largest)
-        {
-            var sizeValue = headingSizeValues[size];
-            return $"[size={sizeValue}]{text}[/size]";
+            return $"[color={colour}]{text}[/color]";
         }
 
         public override string Image(string link, int height = -1, int width = -1, string align = "")
@@ -56,20 +66,28 @@ namespace ManyFormats.Formats
             return $"[url={link}]{text}[/url]";
         }
 
-        public override string List(ListBullets bullet, int indent = 0, params string[] items)
+        public override string List(ListBullets bullet, int indent = 0, bool spacedItems = false, params string[] items)
         {
-            var list = "[list";
-            if (bullet == ListBullets.Number)
+            var list = string.Empty;
+            for(var i = 0; i <= indent; i++)
             {
-                list += "=1";
+                list += "[list";
+                if (bullet == ListBullets.Number) list += "=1";
+                list += "]";
+                if (i == indent) list += Preferences.NewLine;
             }
-            list += "]" + Environment.NewLine;
 
-            foreach (var item in items)
+            for (var i = 0; i < items.Length; i++)
             {
-                list += "[*] " + item + Environment.NewLine;
+                if (spacedItems && i > 0) list += Preferences.NewLine;
+                var item = items[i];
+                list += "[*]" + item + Preferences.NewLine;
             }
-            list += "[/list]";
+
+            for (var i = 0; i <= indent; i++)
+            {
+                list += "[/list]";
+            }
 
             return list;
         }
@@ -82,21 +100,6 @@ namespace ManyFormats.Formats
         public override string Strikethrough(string text)
         {
             return $"[s]{text}[/s]";
-        }
-
-        public override string Subscript(string text)
-        {
-            throw new NotImplementedException("This implementation of BBCode does not support subscript");
-        }
-
-        public override string Superscript(string text)
-        {
-            throw new NotImplementedException("This implementation of BBCode does not support superscript");
-        }
-
-        public override string Task(string text, bool complete = false)
-        {
-            throw new NotImplementedException("This implementation of BBCode does not support tasks");
         }
 
         public override string Underline(string text)
