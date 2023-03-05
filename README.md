@@ -1,6 +1,6 @@
 # ManyFormats
 
-### ManyFormats Provides functionality to format text using predefined or custom formats.
+### ManyFormats provides functionality to format text using predefined or custom formats.
 
 I maintain a project which has documentation in Markdown formatting as well as BBCode formatting. I got fed up with updating two otherwise equal files all the time, so I figured out a way to keep the text in one place.
 
