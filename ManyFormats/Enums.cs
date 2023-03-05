@@ -8,6 +8,7 @@
         Small,
         Smallest,
     }
+
     public enum FontSize : int
     {
         One = 1,
@@ -37,5 +38,4 @@
         Plus,
         Number,
     }
-
 }

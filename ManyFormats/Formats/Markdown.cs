@@ -5,19 +5,19 @@ namespace ManyFormats.Formats
 {
     public class Markdown : Format
     {
-
         private Dictionary<HeadingSize, string> headingSizePrefixes;
         private Dictionary<ListBullets, string> listBulletsPrefixes;
 
         public Markdown() : this("Markdown") { }
+        
         public Markdown(string name) : base(name)
         {
             headingSizePrefixes = new Dictionary<HeadingSize, string>()
             {
-                [HeadingSize.Largest]  = "# ",
-                [HeadingSize.Large]    = "## ",
-                [HeadingSize.Medium]   = "### ",
-                [HeadingSize.Small]    = "#### ",
+                [HeadingSize.Largest] = "# ",
+                [HeadingSize.Large] = "## ",
+                [HeadingSize.Medium] = "### ",
+                [HeadingSize.Small] = "#### ",
                 [HeadingSize.Smallest] = "##### ",
             };
 
@@ -90,7 +90,7 @@ namespace ManyFormats.Formats
                 list += tabs;
                 if (bullet == ListBullets.Number)
                 {
-                    list += $"{i+1}. ";
+                    list += $"{i + 1}. ";
                 }
                 else
                 {
@@ -126,6 +126,5 @@ namespace ManyFormats.Formats
         {
             return $"[{(complete ? "x" : " ")}] {text}";
         }
-
     }
 }

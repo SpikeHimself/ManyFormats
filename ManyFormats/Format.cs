@@ -2,11 +2,10 @@
 
 namespace ManyFormats
 {
-
     public abstract class Format
     {
         public virtual string Name { get; set; }
-        public FormatPreferences Preferences { get; set;  }
+        public FormatPreferences Preferences { get; set; }
 
         protected Format(string name, FormatPreferences prefs)
         {

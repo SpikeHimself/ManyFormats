@@ -4,7 +4,6 @@ namespace ManyFormats
 {
     public class FormatPreferences
     {
-
         public enum LineEndingOptions
         {
             Automatic,
@@ -19,17 +18,12 @@ namespace ManyFormats
             ReturnInput,
             Skip
         }
-
-        public LineEndingOptions LineEnding { get; set; }
-        public NotImplementedHandlingOptions NotImplementedHandling { get; set; }
-
+        
         public static FormatPreferences DefaultPreferences = new FormatPreferences();
 
-        public FormatPreferences()
-        {
-            LineEnding = LineEndingOptions.Automatic;
-            NotImplementedHandling = NotImplementedHandlingOptions.ThrowException;
-        }
+        public LineEndingOptions LineEnding { get; set; }
+
+        public NotImplementedHandlingOptions NotImplementedHandling { get; set; }
 
         public string NewLine
         {
@@ -48,6 +42,12 @@ namespace ManyFormats
                         return "\r\n";
                 }
             }
+        }
+
+        public FormatPreferences()
+        {
+            LineEnding = LineEndingOptions.Automatic;
+            NotImplementedHandling = NotImplementedHandlingOptions.ThrowException;
         }
     }
 }

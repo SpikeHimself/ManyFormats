@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ManyFormats.Formats
 {
@@ -8,7 +7,8 @@ namespace ManyFormats.Formats
         private Dictionary<HeadingSize, FontSize> headingToFontMap;
 
         public Bbcode() : this("BBCode") { }
-        public Bbcode(string name) : base(name) 
+        
+        public Bbcode(string name) : base(name)
         {
             headingToFontMap = new Dictionary<HeadingSize, FontSize>()
             {
@@ -69,7 +69,7 @@ namespace ManyFormats.Formats
         public override string List(ListBullets bullet, int indent = 0, bool spacedItems = false, params string[] items)
         {
             var list = string.Empty;
-            for(var i = 0; i <= indent; i++)
+            for (var i = 0; i <= indent; i++)
             {
                 list += "[list";
                 if (bullet == ListBullets.Number) list += "=1";
