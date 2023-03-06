@@ -16,26 +16,21 @@ Given the following example file `document-template.txt`:
 <#= mf.Link("Open an issue!", "https://github.com/SpikeHimself/ManyFormats/issues") #>
 ```
 
-I can maintain my documentation like so, for Markdown:
+I can maintain my documentation using the following T4 setup so, for Markdown:
 
 ```
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ assembly name="$(SolutionDir)\libraries\ManyFormats.dll" #>
-<#@ import namespace="ManyFormats" #>
-<#@ import namespace="ManyFormats.Formats" #>
 <#@ output extension=".md" #>
 <# var mf = new Markdown(); #>
 <#@ include file="document-template.txt" once="true" #>
 
 ```
 
-And a similar file with only the changes below, for BBCode:
+And like so, for BBCode:
 
 ```
 <#@ output extension=".bbcode" #>
-<# var mf = new BBCode(); #>
-
+<# var mf = new Bbcode(); #>
+<#@ include file="document-template.txt" once="true" #>
 ```
 
 And the outputs would be, respectively:
