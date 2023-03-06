@@ -5,11 +5,11 @@ namespace ManyFormats.Formats
 {
     public class Markdown : Format
     {
-        private Dictionary<HeadingSize, string> headingSizePrefixes;
-        private Dictionary<ListBullets, string> listBulletsPrefixes;
+        private readonly Dictionary<HeadingSize, string> headingSizePrefixes;
+        private readonly Dictionary<ListBullets, string> listBulletsPrefixes;
 
         public Markdown() : this("Markdown") { }
-        
+
         public Markdown(string name) : base(name)
         {
             headingSizePrefixes = new Dictionary<HeadingSize, string>()

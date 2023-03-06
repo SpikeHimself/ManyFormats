@@ -105,5 +105,10 @@ namespace ManyFormats
         {
             return NotImplemented(text, nameof(Task));
         }
+
+        public virtual string Font(string text, Fonts font)
+        {
+            return NotImplemented(text, nameof(Font));
+        }
     }
 }

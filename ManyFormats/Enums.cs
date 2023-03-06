@@ -19,6 +19,18 @@
         Six = 6,
     }
 
+    public enum Fonts
+    {
+        Arial,
+        ComicSansMs,
+        Georgia,
+        LucidaSansUnicode,
+        Tahoma,
+        TimesNewRoman,
+        TrebuchetMs,
+        Verdana,
+    }
+
     public enum ItalicMode
     {
         Default,

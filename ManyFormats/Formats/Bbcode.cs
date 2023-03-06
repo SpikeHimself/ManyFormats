@@ -4,19 +4,32 @@ namespace ManyFormats.Formats
 {
     public class Bbcode : Format
     {
-        private Dictionary<HeadingSize, FontSize> headingToFontMap;
+        private readonly Dictionary<HeadingSize, FontSize> headingToFontSizeMap;
+        private readonly Dictionary<Fonts, string> fontsToFontNameMap;
 
         public Bbcode() : this("BBCode") { }
         
         public Bbcode(string name) : base(name)
         {
-            headingToFontMap = new Dictionary<HeadingSize, FontSize>()
+            headingToFontSizeMap = new Dictionary<HeadingSize, FontSize>()
             {
                 [HeadingSize.Largest] = FontSize.Six,
                 [HeadingSize.Large] = FontSize.Five,
                 [HeadingSize.Medium] = FontSize.Four,
                 [HeadingSize.Small] = FontSize.Three,
                 [HeadingSize.Smallest] = FontSize.Two,
+            };
+
+            fontsToFontNameMap = new Dictionary<Fonts, string>()
+            {
+                [Fonts.Arial] = "Arial",
+                [Fonts.ComicSansMs] = "Comic Sans MS",
+                [Fonts.Georgia] = "Georgia",
+                [Fonts.LucidaSansUnicode] = "Lucida Sans Unicode",
+                [Fonts.Tahoma] = "Tahoma",
+                [Fonts.TimesNewRoman] = "Times New Roman",
+                [Fonts.TrebuchetMs] = "Trebuchet MS",
+                [Fonts.Verdana] = "Verdana",
             };
         }
 
@@ -33,7 +46,7 @@ namespace ManyFormats.Formats
         /// <returns>Bolded text of a FontSize similar to the given HeadingSize</returns>
         public override string Heading(string text, HeadingSize size = HeadingSize.Largest)
         {
-            return Size(Bold(text), headingToFontMap[size]);
+            return Size(Bold(text), headingToFontSizeMap[size]);
         }
 
         public override string Bold(string text)
@@ -105,6 +118,16 @@ namespace ManyFormats.Formats
         public override string Underline(string text)
         {
             return $"[u]{text}[/u]";
+        }
+
+        public override string Font(string text, Fonts font)
+        {
+            return $"[font={fontsToFontNameMap[font]}]{text}[/font]";
+        }
+
+        public string Font(string text, string fontName)
+        {
+            return $"[font={fontName}]{text}[/font]";
         }
     }
 }
