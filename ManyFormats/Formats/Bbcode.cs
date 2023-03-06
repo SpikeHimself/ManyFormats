@@ -8,7 +8,7 @@ namespace ManyFormats.Formats
         private readonly Dictionary<Fonts, string> fontsToFontNameMap;
 
         public Bbcode() : this("BBCode") { }
-        
+
         public Bbcode(string name) : base(name)
         {
             headingToFontSizeMap = new Dictionary<HeadingSize, FontSize>()

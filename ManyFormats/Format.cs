@@ -23,7 +23,7 @@ namespace ManyFormats
             {
                 default:
                 case FormatPreferences.NotImplementedHandlingOptions.ThrowException:
-                    throw new NotImplementedException($"This implementation of {Name} does not support {func}");
+                    throw new NotImplementedException($"This implementation of `{Name}` does not support `{func}`");
                 case FormatPreferences.NotImplementedHandlingOptions.ReturnInput:
                     return input;
                 case FormatPreferences.NotImplementedHandlingOptions.Skip:

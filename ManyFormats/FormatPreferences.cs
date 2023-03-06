@@ -18,7 +18,7 @@ namespace ManyFormats
             ReturnInput,
             Skip
         }
-        
+
         public static FormatPreferences DefaultPreferences = new FormatPreferences();
 
         public LineEndingOptions LineEnding { get; set; }
