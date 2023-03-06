@@ -16,7 +16,7 @@ Given the following example file `document-template.txt`:
 <#= mf.Link("Open an issue!", "https://github.com/SpikeHimself/ManyFormats/issues") #>
 ```
 
-I can maintain my documentation using the following T4 setup so, for Markdown:
+I can maintain my documentation using the following T4 setup, for Markdown:
 
 ```
 <#@ output extension=".md" #>
