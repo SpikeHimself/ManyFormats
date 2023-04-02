@@ -86,14 +86,14 @@ namespace ManyFormats
             return NotImplemented(text, nameof(Code));
         }
 
-        public virtual string Link(string text, string link)
+        public virtual string Link(string text, string uri)
         {
             return NotImplemented(text, nameof(Link));
         }
 
         public virtual string Image(string uri, int height = -1, int width = -1, Alignment align = Alignment.Left)
         {
-            return NotImplemented(link, nameof(Image));
+            return NotImplemented(uri, nameof(Image));
         }
 
         public virtual string List(ListBullets bullet, int indent = 0, bool spacedItems = false, params string[] items)

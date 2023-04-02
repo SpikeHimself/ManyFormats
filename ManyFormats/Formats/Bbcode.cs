@@ -83,9 +83,9 @@ namespace ManyFormats.Formats
             return $"[i]{text}[/i]";
         }
 
-        public override string Link(string text, string link)
+        public override string Link(string text, string uri)
         {
-            return $"[url={link}]{text}[/url]";
+            return $"[url={uri}]{text}[/url]";
         }
 
         public override string List(ListBullets bullet, int indent = 0, bool spacedItems = false, params string[] items)
