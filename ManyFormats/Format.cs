@@ -102,7 +102,7 @@ namespace ManyFormats
             return NotImplemented(text, nameof(Link));
         }
 
-        public virtual string Image(string uri, int height = -1, int width = -1, Alignment align = Alignment.Left)
+        public virtual string Image(string uri, int height = -1, int width = -1, Alignment align = Alignment.Unspecified)
         {
             return NotImplemented(uri, nameof(Image));
         }
