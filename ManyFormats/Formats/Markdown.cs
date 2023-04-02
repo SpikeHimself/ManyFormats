@@ -47,7 +47,7 @@ namespace ManyFormats.Formats
             switch (mode)
             {
                 case CodeMode.Block:
-                    return $"```{Environment.NewLine}{text}{Environment.NewLine}```";
+                    return $"```{Preferences.NewLine}{text}{Preferences.NewLine}```";
 
                 default:
                 case CodeMode.Inline:
