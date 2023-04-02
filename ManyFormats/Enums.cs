@@ -54,6 +54,7 @@
 
     public enum Alignment
     {
+        Unspecified,
         Left,
         Centre,
         Right,

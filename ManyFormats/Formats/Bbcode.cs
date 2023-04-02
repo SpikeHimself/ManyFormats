@@ -6,7 +6,6 @@ namespace ManyFormats.Formats
     {
         private readonly Dictionary<HeadingSize, FontSize> headingToFontSizeMap;
         private readonly Dictionary<FontName, string> fontsToFontNameMap;
-        private readonly Dictionary<Alignment, string> alignmentMap;
 
         public Bbcode() : this("BBCode") { }
 
@@ -32,13 +31,6 @@ namespace ManyFormats.Formats
                 [FontName.TimesNewRoman] = "Times New Roman",
                 [FontName.TrebuchetMs] = "Trebuchet MS",
                 [FontName.Verdana] = "Verdana",
-            };
-
-            alignmentMap = new Dictionary<Alignment, string>()
-            {
-                [Alignment.Left] = "left",
-                [Alignment.Centre] = "center",
-                [Alignment.Right] = "right",
             };
         }
 
@@ -73,7 +65,7 @@ namespace ManyFormats.Formats
             return $"[color={colour}]{text}[/color]";
         }
 
-        public override string Image(string uri, int height = -1, int width = -1, Alignment align = Alignment.Left)
+        public override string Image(string uri, int height = -1, int width = -1, Alignment align = Alignment.Unspecified)
         {
             return Align($"[img]{uri}[/img]", align);
         }
@@ -139,9 +131,14 @@ namespace ManyFormats.Formats
             return $"[font={fontName}]{text}[/font]";
         }
 
-        public override string Align(string text, Alignment align = Alignment.Left)
+        public override string Align(string text, Alignment align = Alignment.Unspecified)
         {
-            var strAlign = alignmentMap[align];
+            if (align == Alignment.Unspecified)
+            {
+                return text;
+            }
+
+            var strAlign = AlignmentMap[align];
             return $"[{strAlign}]{text}[/{strAlign}]";
         }
     }
