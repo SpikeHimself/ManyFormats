@@ -142,7 +142,7 @@ namespace ManyFormats.Formats
         public override string Align(string text, Alignment align = Alignment.Left)
         {
             var strAlign = alignmentMap[align];
-            return $"<[{strAlign}]{text}[/{strAlign}]";
+            return $"[{strAlign}]{text}[/{strAlign}]";
         }
     }
 }
