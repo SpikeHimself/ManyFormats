@@ -6,7 +6,6 @@ namespace ManyFormats.Formats
     {
         private readonly Dictionary<HeadingSize, string> headingSizePrefixes;
         private readonly Dictionary<ListBullets, string> listBulletsPrefixes;
-        private readonly Dictionary<Alignment, string> alignmentMap;
 
         public Markdown() : this("Markdown") { }
 
@@ -26,13 +25,6 @@ namespace ManyFormats.Formats
                 [ListBullets.Dash] = "- ",
                 [ListBullets.Asterisk] = "* ",
                 [ListBullets.Plus] = "+ ",
-            };
-
-            alignmentMap = new Dictionary<Alignment, string>()
-            {
-                [Alignment.Left] = "left",
-                [Alignment.Centre] = "center",
-                [Alignment.Right] = "right",
             };
         }
 
@@ -59,13 +51,13 @@ namespace ManyFormats.Formats
             return headingSizePrefixes[size] + text;
         }
 
-        public override string Image(string link, int height = -1, int width = -1, Alignment align = Alignment.Left)
+        public override string Image(string link, int height = -1, int width = -1, Alignment align = Alignment.Unspecified)
         {
-            var strAlign = alignmentMap[align];
+            var strAlign = AlignmentMap[align];
             return $"<img src=\"{link}\""
                 + (height > -1 ? $" height=\"{height}\"" : "")
                 + (width > -1 ? $" width=\"{width}\"" : "")
-                + $" align=\"{strAlign}\""
+                + (align == Alignment.Unspecified ? string.Empty : $" align=\"{strAlign}\"")
                 + $" />";
         }
 
@@ -137,7 +129,7 @@ namespace ManyFormats.Formats
 
         public override string Align(string text, Alignment align)
         {
-            var strAlign = alignmentMap[align];
+            var strAlign = AlignmentMap[align];
             return $"<p align=\"{strAlign}\">{text}</p>";
         }
     }

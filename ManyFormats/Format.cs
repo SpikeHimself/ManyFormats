@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ManyFormats
 {
@@ -7,8 +8,18 @@ namespace ManyFormats
         public virtual string Name { get; set; }
         public FormatPreferences Preferences { get; set; }
 
+        protected readonly Dictionary<Alignment, string> AlignmentMap;
+
         protected Format(string name, FormatPreferences prefs)
         {
+            AlignmentMap = new Dictionary<Alignment, string>()
+            {
+                [Alignment.Unspecified] = string.Empty,
+                [Alignment.Left] = "left",
+                [Alignment.Centre] = "center",
+                [Alignment.Right] = "right",
+            };
+
             Name = name;
             Preferences = prefs;
         }
@@ -111,7 +122,7 @@ namespace ManyFormats
             return NotImplemented(text, nameof(Font));
         }
 
-        public virtual string Align(string text, Alignment alignment)
+        public virtual string Align(string text, Alignment align = Alignment.Unspecified)
         {
             return NotImplemented(text, nameof(Align));
         }
