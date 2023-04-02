@@ -91,7 +91,7 @@ namespace ManyFormats
             return NotImplemented(text, nameof(Link));
         }
 
-        public virtual string Image(string link, int height = -1, int width = -1, string align = "")
+        public virtual string Image(string uri, int height = -1, int width = -1, Alignment align = Alignment.Left)
         {
             return NotImplemented(link, nameof(Image));
         }
@@ -106,9 +106,14 @@ namespace ManyFormats
             return NotImplemented(text, nameof(Task));
         }
 
-        public virtual string Font(string text, Fonts font)
+        public virtual string Font(string text, FontName font)
         {
             return NotImplemented(text, nameof(Font));
+        }
+
+        public virtual string Align(string text, Alignment alignment)
+        {
+            return NotImplemented(text, nameof(Align));
         }
     }
 }

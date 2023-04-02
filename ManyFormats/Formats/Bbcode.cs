@@ -5,7 +5,8 @@ namespace ManyFormats.Formats
     public class Bbcode : Format
     {
         private readonly Dictionary<HeadingSize, FontSize> headingToFontSizeMap;
-        private readonly Dictionary<Fonts, string> fontsToFontNameMap;
+        private readonly Dictionary<FontName, string> fontsToFontNameMap;
+        private readonly Dictionary<Alignment, string> alignmentMap;
 
         public Bbcode() : this("BBCode") { }
 
@@ -20,16 +21,24 @@ namespace ManyFormats.Formats
                 [HeadingSize.Smallest] = FontSize.Two,
             };
 
-            fontsToFontNameMap = new Dictionary<Fonts, string>()
+            fontsToFontNameMap = new Dictionary<FontName, string>()
             {
-                [Fonts.Arial] = "Arial",
-                [Fonts.ComicSansMs] = "Comic Sans MS",
-                [Fonts.Georgia] = "Georgia",
-                [Fonts.LucidaSansUnicode] = "Lucida Sans Unicode",
-                [Fonts.Tahoma] = "Tahoma",
-                [Fonts.TimesNewRoman] = "Times New Roman",
-                [Fonts.TrebuchetMs] = "Trebuchet MS",
-                [Fonts.Verdana] = "Verdana",
+                [FontName.Arial] = "Arial",
+                [FontName.ComicSansMs] = "Comic Sans MS",
+                [FontName.CourierNew] = "Courier New",
+                [FontName.Georgia] = "Georgia",
+                [FontName.LucidaSansUnicode] = "Lucida Sans Unicode",
+                [FontName.Tahoma] = "Tahoma",
+                [FontName.TimesNewRoman] = "Times New Roman",
+                [FontName.TrebuchetMs] = "Trebuchet MS",
+                [FontName.Verdana] = "Verdana",
+            };
+
+            alignmentMap = new Dictionary<Alignment, string>()
+            {
+                [Alignment.Left] = "left",
+                [Alignment.Centre] = "center",
+                [Alignment.Right] = "right",
             };
         }
 
@@ -64,9 +73,9 @@ namespace ManyFormats.Formats
             return $"[color={colour}]{text}[/color]";
         }
 
-        public override string Image(string link, int height = -1, int width = -1, string align = "")
+        public override string Image(string uri, int height = -1, int width = -1, Alignment align = Alignment.Left)
         {
-            return $"[img]{link}[/img]";
+            return Align($"[img]{uri}[/img]", align);
         }
 
         public override string Italic(string text, ItalicMode mode = ItalicMode.Default)
@@ -120,7 +129,7 @@ namespace ManyFormats.Formats
             return $"[u]{text}[/u]";
         }
 
-        public override string Font(string text, Fonts font)
+        public override string Font(string text, FontName font)
         {
             return $"[font={fontsToFontNameMap[font]}]{text}[/font]";
         }
@@ -128,6 +137,12 @@ namespace ManyFormats.Formats
         public string Font(string text, string fontName)
         {
             return $"[font={fontName}]{text}[/font]";
+        }
+
+        public override string Align(string text, Alignment align = Alignment.Left)
+        {
+            var strAlign = alignmentMap[align];
+            return $"<[{strAlign}]{text}[/{strAlign}]";
         }
     }
 }

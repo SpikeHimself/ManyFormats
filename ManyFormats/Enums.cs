@@ -19,7 +19,7 @@
         Six = 6,
     }
 
-    public enum Fonts
+    public enum FontName
     {
         Arial,
         ComicSansMs,
@@ -50,5 +50,12 @@
         Asterisk,
         Plus,
         Number,
+    }
+
+    public enum Alignment
+    {
+        Left,
+        Centre,
+        Right,
     }
 }

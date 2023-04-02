@@ -7,6 +7,7 @@ namespace ManyFormats.Formats
     {
         private readonly Dictionary<HeadingSize, string> headingSizePrefixes;
         private readonly Dictionary<ListBullets, string> listBulletsPrefixes;
+        private readonly Dictionary<Alignment, string> alignmentMap;
 
         public Markdown() : this("Markdown") { }
 
@@ -26,6 +27,13 @@ namespace ManyFormats.Formats
                 [ListBullets.Dash] = "- ",
                 [ListBullets.Asterisk] = "* ",
                 [ListBullets.Plus] = "+ ",
+            };
+
+            alignmentMap = new Dictionary<Alignment, string>()
+            {
+                [Alignment.Left] = "left",
+                [Alignment.Centre] = "center",
+                [Alignment.Right] = "right",
             };
         }
 
@@ -52,12 +60,13 @@ namespace ManyFormats.Formats
             return headingSizePrefixes[size] + text;
         }
 
-        public override string Image(string link, int height = -1, int width = -1, string align = "")
+        public override string Image(string link, int height = -1, int width = -1, Alignment align = Alignment.Left)
         {
+            var strAlign = alignmentMap[align];
             return $"<img src=\"{link}\""
                 + (height > -1 ? $" height=\"{height}\"" : "")
                 + (width > -1 ? $" width=\"{width}\"" : "")
-                + (!string.IsNullOrEmpty(align) ? $" align=\"{align}\"" : "")
+                + $" align=\"{strAlign}\""
                 + $" />";
         }
 
@@ -125,6 +134,12 @@ namespace ManyFormats.Formats
         public override string Task(string text, bool complete = false)
         {
             return $"[{(complete ? "x" : " ")}] {text}";
+        }
+
+        public override string Align(string text, Alignment align)
+        {
+            var strAlign = alignmentMap[align];
+            return $"<p align=\"{strAlign}\">{text}</p>";
         }
     }
 }
