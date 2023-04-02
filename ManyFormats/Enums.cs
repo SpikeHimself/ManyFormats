@@ -23,6 +23,7 @@
     {
         Arial,
         ComicSansMs,
+        CourierNew,
         Georgia,
         LucidaSansUnicode,
         Tahoma,
